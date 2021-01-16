@@ -35,6 +35,13 @@ class AveidasController < ApplicationController
     end
   end
 
+  def destroy
+    @aveida = Aveida.find(params[:id])
+    @aveida.destroy
+
+    redirect_to root_path
+  end
+
   private
     def aveida_params
       params.require(:aveida).permit(:title, :body)

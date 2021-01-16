@@ -3,6 +3,9 @@
 </h1>
 
 <%= link_to "Edit", edit_aveida_path(@aveida) %>
+<%= link_to "Delete", aveida_path(@aveida),
+                  method: :delete,
+                  data: { confirm: "Are you sure?" } %>
 
 <p>
   <%= @aveida.body %>
