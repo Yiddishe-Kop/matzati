@@ -1,0 +1,11 @@
+<h1>Matzati</h1>
+
+<%= link_to  "New Aveida", new_aveida_path %>
+
+<ul>
+  <% @aveidas.each do | aveida | %>
+  <li>
+    <%= link_to aveida.title, aveida %>
+  </li>
+  <% end %>
+</ul>
