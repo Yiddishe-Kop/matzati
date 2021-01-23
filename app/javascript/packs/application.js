@@ -3,11 +3,14 @@
 // a relevant structure within app/javascript and only use these pack files to reference
 // that code so it'll be compiled.
 
-import Rails from "@rails/ujs"
-import Turbolinks from "turbolinks"
-import * as ActiveStorage from "@rails/activestorage"
-import "channels"
+import { createApp, h } from 'vue'
+import { App, plugin } from '@inertiajs/inertia-vue3'
 
-Rails.start()
-Turbolinks.start()
-ActiveStorage.start()
+const el = document.getElementById('app')
+
+createApp({
+  render: () => h(App, {
+    initialPage: JSON.parse(el.dataset.page),
+    resolveComponent: name => import(`@/Pages/${name}`).then(module => module.default),
+  })
+}).use(plugin).mount(el)

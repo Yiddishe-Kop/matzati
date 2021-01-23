@@ -1,6 +1,11 @@
 class AveidasController < ApplicationController
   def index
-    @aveidas = Aveida.all
+    aveidas = Aveida.all
+
+    render inertia: 'Aveidas/Index',
+      props: {
+        aveidas: aveidas.as_json
+      }
   end
 
   def show
