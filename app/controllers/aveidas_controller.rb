@@ -1,15 +1,16 @@
 class AveidasController < ApplicationController
   def index
-    aveidas = Aveida.all
-
     render inertia: 'Aveidas/Index',
       props: {
-        aveidas: aveidas.as_json
+        aveidas: Aveida.all.as_json
       }
   end
 
   def show
-    @aveida = Aveida.find(params[:id])
+    render inertia: 'Aveidas/Show',
+      props: {
+        aveida: Aveida.find(params[:id]).as_json
+      }
   end
 
   def new
@@ -27,16 +28,21 @@ class AveidasController < ApplicationController
   end
 
   def edit
-    @aveida = Aveida.find(params[:id])
+    render inertia: 'Aveidas/Edit',
+      props: {
+        aveida: Aveida.find(params[:id]).as_json
+      }
   end
 
   def update
-    @aveida = Aveida.find(params[:id])
-
-    if @aveida.update(aveida_params)
-      redirect_to @aveida
+    aveida = Aveida.find(params[:id])
+    puts YAML::dump(aveida_params)
+    if aveida.update(aveida_params)
+      # redirect_to aveidas_path
+      redirect_to aveida_path(aveida)
+      # redirect_to root_path
     else
-      render :edit
+      redirect_back
     end
   end
 
@@ -49,7 +55,7 @@ class AveidasController < ApplicationController
 
   private
     def aveida_params
-      params.require(:aveida).permit(:title, :body)
+      params.fetch(:aveida, {}).permit(:title, :body)
     end
 
 end
